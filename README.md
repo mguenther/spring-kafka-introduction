@@ -16,7 +16,7 @@ This repository is structured into several smaller Maven modules, each highlight
 
 ## Prerequisites
 
-Running the showcase requires a working installation of Apache ZooKeeper and Apache Kafka. We provide `Dockerfile`s for both of them to get you started easily. Please make sure that [Docker](https://docs.docker.com/engine/installation/) as well as [Docker Compose](https://docs.docker.com/compose/install/) are installed on your system.
+Running the showcase requires a working installation of Apache ZooKeeper and Apache Kafka. Please make sure that [Docker](https://docs.docker.com/engine/installation/) as well as [Docker Compose](https://docs.docker.com/compose/install/) are installed on your system.
 
 ### Versions
 
@@ -33,7 +33,7 @@ Start the resp. containers using the provided `docker-compose` script (cf. `dock
 $ docker-compose up
 ```
 
-for starting Apache Kafka and Apache Zookeeper. Stopping the containers is best done using a separate terminal and issueing the following commands.
+for starting Apache Kafka and Apache Zookeeper. Stopping the containers is best done using a separate terminal and issuing the following commands.
 
 ```bash
 $ docker-compose stop
