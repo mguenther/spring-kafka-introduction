@@ -24,7 +24,7 @@
         <!-- Managed dependency versions -->
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <junit.vintage.version>5.7.0</junit.vintage.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <hamcrest.version>2.2</hamcrest.version>
         <slf4j.version>1.7.22</slf4j.version>
         <spring.version>5.3.3</spring.version>
