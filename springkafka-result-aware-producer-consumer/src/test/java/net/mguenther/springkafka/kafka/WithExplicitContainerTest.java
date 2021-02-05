@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
-import org.springframework.kafka.listener.config.ContainerProperties;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
@@ -40,7 +39,6 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 @ActiveProfiles("test")
 @DirtiesContext
-@Ignore("KafkaEmbedded as ClassRule fails for subsequent tests that use the same ClassRule. Ignored until we know how to fix this.")
 public class WithExplicitContainerTest {
 
     private static final Logger log = LoggerFactory.getLogger(WithExplicitContainerTest.class);
@@ -48,7 +46,7 @@ public class WithExplicitContainerTest {
     private static final String TOPIC_NAME = "test";
 
     @ClassRule
-    public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, TOPIC_NAME);
+    public static EmbeddedKafkaRule kafkaRule = new EmbeddedKafkaRule(1, true, TOPIC_NAME);
 
     @Autowired
     private ResultAwareMessageProducer producer;
@@ -59,13 +57,13 @@ public class WithExplicitContainerTest {
 
     @BeforeClass
     public static void prepareEnvironment() {
-        System.setProperty("spring.kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
+        System.setProperty("spring.kafka.bootstrap-servers", kafkaRule.getEmbeddedKafka().getBrokersAsString());
     }
 
     @Before
-    public void prepareTest() throws Exception {
-        Map<String, Object> consumerProperties = KafkaTestUtils.consumerProps("sender", "false", embeddedKafka); // set up Kafka consumer properties
-        DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<String, String>(consumerProperties); // create a ConsumerFactory
+    public void prepareTest() {
+        Map<String, Object> consumerProperties = KafkaTestUtils.consumerProps("sender", "false", kafkaRule.getEmbeddedKafka()); // set up Kafka consumer properties
+        DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<>(consumerProperties); // create a ConsumerFactory
         ContainerProperties containerProperties = new ContainerProperties(TOPIC_NAME); // set the topics that ought to be consumed
         records = new LinkedBlockingQueue<>(); // create a thread safe queue to store the received message
         container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
@@ -74,7 +72,7 @@ public class WithExplicitContainerTest {
             records.add(record);
         });
         container.start();
-        ContainerTestUtils.waitForAssignment(container, embeddedKafka.getPartitionsPerTopic());
+        ContainerTestUtils.waitForAssignment(container, kafkaRule.getEmbeddedKafka().getPartitionsPerTopic());
     }
 
     @After

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mguenther/spring-kafka-introduction.svg?branch=master)](https://travis-ci.org/mguenther/spring-kafka-introduction.svg)
 
-This repository contains three Maven modules that showcase how to implement various Kafka producers and consumers using Spring Kafka. The code presented in this repository is the joint work of [Boris Fresow](mailto://bfresow@gmail.com) and [Markus Günther](mailto://markus.guenther@gmail.com) as part of an article series on **Building Event-based applications with Spring Kafka** for the German [JavaMagazin](https://jaxenter.de/magazine/java-magazin).
+This repository contains three Maven modules that showcase how to implement various Kafka producers and consumers using [Spring for Apache Kafka](https://spring.io/projects/spring-kafka) (2.6.5). The code presented in this repository is the joint work of [Boris Fresow](mailto://bfresow@gmail.com) and [Markus Günther](mailto://markus.guenther@gmail.com) as part of an article series on **Building Event-based applications with Spring Kafka** for the German [JavaMagazin](https://jaxenter.de/magazine/java-magazin).
 
 ## Modules
 
@@ -22,20 +22,18 @@ Running the showcase requires a working installation of Apache ZooKeeper and Apa
 
 | Application         | Version   | Docker Image            |
 | ------------------- | --------- | ----------------------- |
-| Apache Kafka        | 0.11.0.0  | kafka-sampler/kafka     |
-| Apache ZooKeeper    | 3.4.8-1   | kafka-sampler/zookeeper |
+| Apache Kafka        | 2.6.0  | wurstmeister/kafka:2.13-2.6.0     |
+| Apache ZooKeeper    | 3.4.13   | wurstmeister/zookeeper |
 
 ### Building and Running the Containers
 
-Before you execute the code samples, make sure that you have a working environment running. If you have not done it already, use the script ```docker/build-images``` to create Docker images for all required applications. After a couple of minutes, you should be ready to go.
-
-Once the images have been successfully built, you can start the resp. containers using the provided ```docker-compose``` script. Simply issue
+Start the resp. containers using the provided `docker-compose` script (cf. `docker/docker-compose.yml`). Simply issue
 
 ```bash
 $ docker-compose up
 ```
 
-for starting Apache Kafka, Apache Zookeeper and Yahoo Kafka Manager. Stopping the containers is best done using a separate terminal and issueing the following commands.
+for starting Apache Kafka and Apache Zookeeper. Stopping the containers is best done using a separate terminal and issueing the following commands.
 
 ```bash
 $ docker-compose stop

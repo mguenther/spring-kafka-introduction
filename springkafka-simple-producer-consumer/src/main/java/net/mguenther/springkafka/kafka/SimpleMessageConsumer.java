@@ -23,7 +23,7 @@ public class SimpleMessageConsumer {
         this.messageService = messageService;
     }
 
-    @KafkaListener(topics = "${spring-kafka-introduction.topic}", group = "simple-kafka-example")
+    @KafkaListener(topics = "${spring-kafka-introduction.topic}", groupId = "simple-kafka-example")
     public void listen(final String message) {
         log.info("Received message: {}.", message);
         messageService.onMessageReceived(message);

@@ -24,9 +24,9 @@ public class AcknowledgingMessageConsumer {
         this.messageService = messageService;
     }
 
-    @KafkaListener(topics = "${spring-kafka-introduction.topic}", group = "spring-kafka-transactional-example")
+    @KafkaListener(topics = "${spring-kafka-introduction.topic}", groupId = "spring-kafka-transactional-example")
     public void listen(final String message, final Acknowledgment acknowledgment) {
-        log.info("Received (yet unacknowledged) message {} for topic {}.", message);
+        log.info("Received (yet unacknowledged) message {}.", message);
         messageService.onMessageReceived(message);
         acknowledgment.acknowledge();
         log.info("Acknowledged processing of message {}.", message);

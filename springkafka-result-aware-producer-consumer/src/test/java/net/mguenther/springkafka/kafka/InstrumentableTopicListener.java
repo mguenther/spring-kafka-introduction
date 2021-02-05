@@ -24,7 +24,7 @@ public class InstrumentableTopicListener {
 
     private int numberOfReceivedMessages = 0;
 
-    @KafkaListener(topics = "test", group = "test-group")
+    @KafkaListener(topics = "test", groupId = "test-group")
     public void listen(final ConsumerRecord<?, ?> record) throws Exception {
         log.info("Received message: {}", record);
         numberOfReceivedMessages++;

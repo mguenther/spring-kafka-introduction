@@ -26,7 +26,7 @@ public class AcknowledgingMessageConsumer {
         this.messageService = messageService;
     }
 
-    @KafkaListener(topics = "${spring-kafka-introduction.topic}", group = "simple-ack-kafka-example")
+    @KafkaListener(topics = "${spring-kafka-introduction.topic}", groupId = "simple-ack-kafka-example")
     public void listen(final String message, final Acknowledgment acknowledgment) {
         log.info("Received (yet unacknowledged) message {} for topic {}.", message);
         messageService.onMessageReceived(message);
