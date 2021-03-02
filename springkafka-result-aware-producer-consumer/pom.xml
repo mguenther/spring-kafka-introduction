@@ -96,5 +96,10 @@
             <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.mguenther.kafka</groupId>
+            <artifactId>kafka-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
